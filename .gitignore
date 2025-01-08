@@ -1,0 +1,41 @@
+# Python関連
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.db
+
+# IDE関連
+.vscode/
+.idea/
+
+# Flask マイグレーションのファイル（マイグレーションが進行中の場合に便利）
+migrations/
+
+# 仮想環境
+venv/
+env/
+.venv/
+.env/
+
+# ログファイル
+*.log
+
+# 一時ファイル
+*.bak
+*.swp
+*.swo
+
+# OS固有のファイル（Windows, macOS, Linux等）
+Thumbs.db
+.DS_Store
+*.log
+
+# 一時ファイルのバックアップ（例: エディタで開いているファイルのバックアップ）
+*~
+
+# バイナリファイル（もしあれば）
+*.exe
+*.dll
+*.so
+*.dylib
