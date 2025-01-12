@@ -16,7 +16,7 @@ migrations/
 venv/
 env/
 .venv/
-.env/
+.env
 
 # ログファイル
 *.log

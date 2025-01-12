@@ -7,8 +7,8 @@ from sqlalchemy.orm import DeclarativeBase
 
 
 # テンプレートと静的ファイルの置き場所
-TEMPLATE_PATH = 'project/templates'
-STATIC_PATH = 'project/static'
+TEMPLATE_PATH = '../project/templates'
+STATIC_PATH = '../project/static'
 
 # .envファイルの読み込み
 load_dotenv()
