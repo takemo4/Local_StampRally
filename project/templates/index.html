@@ -1,1 +1,77 @@
-<!--トップページ -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スタンプラリー一覧</title>
+  <link rel="stylesheet" href="/static/stayle.css">
+</head>
+<body>
+  <!-- ヘッダー -->
+  <div id="header-container"></div>
+  <script>
+    fetch('/static/header.html')
+      .then(response => response.text())
+      .then(data => document.getElementById('header-container').innerHTML = data)
+      .catch(error => console.error('ヘッダーの読み込み中にエラー:', error));
+  </script>
+
+  <!-- メインコンテンツ -->
+  <div class="main-container">
+    <div class="sidebar">
+      <h1>地元<br>スタンプラリー</h1>
+    </div>
+    <div class="content" id="rally-list">
+      <!-- スタンプラリー項目がここに挿入される -->
+    </div>
+  </div>
+
+  <script>
+    const rallyListElement = document.getElementById('rally-list');
+
+    // スタンプラリー一覧をAPIから取得して表示
+    function createRallyItem(rally) {
+      const rallyDiv = document.createElement('div');
+      rallyDiv.className = 'stamprally-item';
+
+      rallyDiv.innerHTML = `
+        <div class="content">
+          <h2>${rally.name}</h2>
+          <button class="join-button">参加する</button>
+        </div>
+        <img src="https://via.placeholder.com/150" alt="${rally.name}">
+      `;
+
+      // ボタンのクリックイベントを設定
+      const joinButton = rallyDiv.querySelector('.join-button');
+      joinButton.addEventListener('click', () => {
+        window.location.href = `/getstamp/${rally.rally_id}`;
+      });
+
+      return rallyDiv;
+    }
+
+    fetch('/api/rallies')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('サーバーからのデータ取得に失敗しました');
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.length === 0) {
+          rallyListElement.innerHTML = '<p>スタンプラリーが見つかりませんでした。</p>';
+        } else {
+          data.forEach(rally => {
+            const rallyDiv = createRallyItem(rally);
+            rallyListElement.appendChild(rallyDiv);
+          });
+        }
+      })
+      .catch(error => {
+        console.error('スタンプラリー一覧の取得エラー:', error);
+        rallyListElement.innerHTML = '<p>スタンプラリーの読み込み中にエラーが発生しました。</p>';
+      });
+  </script>
+</body>
+</html>

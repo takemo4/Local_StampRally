@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スタンプラリー詳細</title>
+    <link rel="stylesheet" href="/static/stayle.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body class="getstamp-body">
+  <div id="header-container"></div>
+  <script>
+    fetch('/static/header.html')
+      .then(response => response.text())
+      .then(data => document.getElementById('header-container').innerHTML = data)
+      .catch(error => console.error('ヘッダーの読み込み中にエラー:', error));
+      
+  </script>
+  <!-- 地図エリア -->
+  <div class="getstamp-map" id="map"></div>
+  <!-- スポット一覧エリア -->
+  <div class="getstamp-stamps" id="stamp-list">
+      <h2 id="rally-name"></h2>
+      <p id="rally-description"></p>
+      <!-- スポット情報がここに挿入されます -->
+      <div class="getstamp-actions">
+          <button onclick="collectStamps()">スタンプ取得</button>
+      </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+      const map = L.map('map').setView([41.7687, 140.7367], 13); // デフォルト位置
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      const rallyData = {{ rally|tojson }};
+      document.getElementById('rally-name').textContent = rallyData.name;
+      document.getElementById('rally-description').textContent = rallyData.description;
+
+      const stampList = document.querySelector('.getstamp-stamps');
+
+      rallyData.spots.forEach((spot, index) => {
+          const spotDiv = document.createElement('div');
+          spotDiv.className = 'getstamp-slot';
+          spotDiv.innerHTML = `
+              <strong>${spot.name}</strong>
+              <p>${spot.description}</p>
+          `;
+          stampList.insertBefore(spotDiv, stampList.lastElementChild);
+
+          // 地図にスポットを追加
+          const marker = L.marker([spot.latitude, spot.longitude])
+              .addTo(map)
+              .bindPopup(`${spot.name}<br>${spot.description}`);
+          if (index === 0) {
+              map.setView([spot.latitude, spot.longitude], 13);
+              marker.openPopup();
+          }
+      });
+
+      function collectStamps() {
+          rallyData.spots.forEach(spot => {
+              fetch(`/api/stamp-status/${spot.spot_id}`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ latitude: 35.0, longitude: 135.0 }) // サンプル位置情報
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.status === 'success') {
+                      alert(`${spot.name}のスタンプを取得しました！`);
+                  } else {
+                      alert(`${spot.name}のスタンプ取得に失敗: ${data.message}`);
+                  }
+              })
+              .catch(error => console.error('エラー:', error));
+          });
+      }
+  </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<html lang=“ja”>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スタンプラリー - 函館市</title>
+    <!-- LeafletのCSS -->
+    <link rel=“stylesheet” href=“https://unpkg.com/leaflet@1.9.4/dist/leaflet.css”>
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .map {
+            flex: 1;
+            height: 100vh;
+            border-right: 2px solid #ccc;
+        }
+        .stamps {
+            flex: 1;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            justify-items: center;
+        }
+        .stamp-slot {
+            width: 150px;
+            height: 150px;
+            border: 2px dashed #aaa;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            color: #777;
+            background-color: #F9F9F9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 左半分：地図表示 -->
+    <div class=“map” id=“map”></div>
+    <!-- 右半分：スタンプ枠 -->
+    <div class=“stamps”>
+        <div class=“stamp-slot”>スタンプ 1</div>
+        <div class=“stamp-slot”>スタンプ 2</div>
+        <div class=“stamp-slot”>スタンプ 3</div>
+        <div class=“stamp-slot”>スタンプ 4</div>
+        <div class=“stamp-slot”>スタンプ 5</div>
+        <div class=“stamp-slot”>スタンプ 6</div>
+    </div>
+    <!-- LeafletのJavaScript -->
+    <script src=“https://unpkg.com/leaflet@1.9.4/dist/leaflet.js”></script>
+    <script>
+        // 地図の初期化（函館市に固定）
+        const map = L.map('map').setView([41.7687, 140.7367], 13);
+        // OpenStreetMapのタイルレイヤーを追加
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href=“https://www.openstreetmap.org/copyright”>OpenStreetMap</a> contributors'
+        }).addTo(map);
+        // 函館市にピンを立てる
+        const marker = L.marker([41.7687, 140.7367]).addTo(map)
+            .bindPopup(‘函館市’)
+            .openPopup();
+    </script>
+</body>
+</html>
