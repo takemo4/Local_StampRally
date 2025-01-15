@@ -88,6 +88,17 @@ def register_routes(app):
         else:
             return jsonify({"error": "Stamp Status not found"}), 404
     
+    @app.route('/api/stamp-status/<int:spot_id>', methods=['POST'])
+    def update_stamp_status(spot_id):
+        # スポットのスタンプ状態を更新
+        stamp_status = StampStatus.query.filter_by(spot_id=spot_id).first()
+        if not stamp_status:
+            return jsonify({"status": "failure", "message": "スポットが見つかりません"})
+        stamp_status.is_completed = True
+        db.session.commit()
+        return jsonify({"status": "success", "message": "スタンプを取得しました！"})
+
+    
     @app.route('/mypage')
     def showprogress():
         # 必要なデータを取得

@@ -140,14 +140,31 @@ nav a:hover {
   overflow-y: auto;
   background-color: #F9F9F9; /* 背景色 */
 }
-/* スタンプリストの配置を変更（1つずつ大きなボタンに変更） */
-.stamp-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* 幅120pxで自動調整 */
-  gap: 20px;                              /* ボタン同士の間隔 */
-  padding: 20px;
-  justify-items: center;
+
+.stamp-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0; /* 通常時は非表示 */
+  transition: opacity 0.3s ease; /* 表示時にフェードイン効果 */
+  background-color: rgba(255, 255, 255, 0.8); /* 半透明の背景 (オプション) */
 }
+
+.stamp-circle img {
+  width: 80%;
+  height: auto;
+}
+
+.getstamp-slot.completed .stamp-circle {
+  opacity: 1; /* スタンプ取得時に表示 */
+}
+
+
 /* ボタンと説明をまとめるコンテナ */
 .spot-container {
   display: flex;
@@ -157,26 +174,84 @@ nav a:hover {
   max-width: 150px;
 }
 /* スタンプボタンのスタイル */
+/* 親コンテナにフレックスボックスとラップを適用 */
+.stamp-list {
+  display: flex;
+  flex-wrap: wrap; /* 要素が横幅を超えた場合に折り返す */
+  justify-content: center; /* 要素を中央揃え */
+  gap: 20px; /* 各要素間の余白 */
+}
+
+/* スタンプの個別要素 */
 .getstamp-slot {
-  width: 120px;                           /* ボタンの幅 */
-  height: 120px;                          /* ボタンの高さ */
-  border: 2px dashed #aaa;
-  border-radius: 50%;                     /* 円形にする */
+  position: relative;
+  width: 120px; /* 必要に応じて調整 */
+  height: 120px; /* 必要に応じて調整 */
+  display: flex;
+  flex-direction: column; /* 縦方向に配置 */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  background-color: #f9f9f9;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease; /* ホバー時の拡大アニメーション */
+}
+
+.getstamp-slot:hover {
+  transform: scale(1.1); /* ホバー時に拡大 */
+}
+
+/* スタンプ取得時の円 */
+.stamp-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1em;
-  color: #333;
-  background-color: #fff;
-  text-align: center;
-  box-sizing: border-box;
-  transition: background-color 0.3s ease;
+  opacity: 0; /* 通常時は非表示 */
+  transition: opacity 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.8); /* 半透明の背景 (オプション) */
 }
-/* スタンプボタンにホバーしたときのエフェクト */
-.getstamp-slot:hover {
-  background-color: #F0F0F0;
-  cursor: pointer;
+
+.stamp-circle img {
+  width: 80%;
+  height: auto;
 }
+
+/* スタンプ取得時に表示 */
+.getstamp-slot.completed .stamp-circle {
+  opacity: 1;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+  .getstamp-slot {
+      width: 100px;
+      height: 100px;
+  }
+
+  .stamp-list {
+      gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .getstamp-slot {
+      width: 80px;
+      height: 80px;
+  }
+
+  .stamp-list {
+      gap: 10px;
+  }
+}
+
 /* スタンプラリーページのアクションボタン */
 .getstamp-actions {
   margin-top: 20px;
@@ -213,4 +288,99 @@ nav a:hover {
 /* ヘッダーと地図＆スタンプラリーエリアの間のスペースを調整 */
 .main-container {
   margin-top: 60px;
+}
+
+.completed, .in-progress {
+  text-align: center;
+  font-size: 1.2em;
+  margin: 20px auto;
+}
+
+.join-button1 {
+  display: inline-block;
+  padding: 10px 30px;
+  text-decoration: none;
+  border: 1px solid black;
+  font-size: 0.9em;
+  cursor: pointer;
+  background: linear-gradient(to bottom, #FFD700, #FFB800, #FFCC00);
+  color: Black;
+  width: 250px;
+  height: 200px;
+  white-space: nowrap;
+    /*  改行しないように */
+  word-wrap: break-word;
+    /*  長い単語は折り返し */
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin: 10px;
+}
+.join-button2 {
+  display: inline-block;
+  padding: 10px 30px;
+  text-decoration: none;
+  border: 1px solid black;
+  font-size: 0.9em;
+  cursor: pointer;
+  background-color: #a9cc51;
+  color: Black;
+  width: 200px;
+  height: 200px;
+  white-space: nowrap;
+    /*  改行しないように */
+  word-wrap: break-word;
+    /*  長い単語は折り返し */
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin: 10px;
+}
+.join-button1:hover {
+  text-decoration: underline;
+}
+.join-button2:hover {
+  text-decoration: underline;
+}
+.scroll-container-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+    /*  横スクロールバーを表示 */
+  white-space: nowrap;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  scroll-behavior: smooth;
+  width: 300px;
+  padding: 5px;
+  width: 70%;
+    /* 画面幅の80%  に設定 */
+  margin: 0 auto;
+    /*  コンテナを中央に配置 */
+}
+h1 {
+  text-align: left;
+  padding-left: 30px;
+  margin-top: 100px;
+  position: relative;
+  z-index: 2;
+}
+h2 {
+  text-align: center;
+  padding-left: 120px;
+  margin-top: 20px;
+}
+.content1 {
+  display: flex;
+  flex-direction: column;
+    /*  デフォルトは縦並び */
+  gap: 20px;
+  padding: 20px;
+}
+.stamprally-item1 {
+  flex: 1;
 }
