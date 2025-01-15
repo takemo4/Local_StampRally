@@ -1,4 +1,3 @@
-/* グローバルスタイル */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -6,7 +5,6 @@ body {
   flex-direction: column;
   height: 100vh;
 }
-
 header {
   display: flex;
   justify-content: space-between;
@@ -22,27 +20,22 @@ header {
   height: 60px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
 .logo {
   font-size: 24px;
   font-weight: bold;
 }
-
 nav {
   display: flex;
   gap: 15px;
 }
-
 nav a {
   color: white;
   text-decoration: none;
   font-size: 16px;
 }
-
 nav a:hover {
   text-decoration: underline;
 }
-
 .cta {
   background-color: White;
   color: Black;
@@ -50,17 +43,14 @@ nav a:hover {
   border-radius: 5px;
   text-decoration: none;
 }
-
 .cta:hover {
-  background-color: #e67e22;
+  background-color: #E67E22;
 }
-
 .main-container {
   display: flex;
   flex: 1;
   margin-top: 60px; /* ヘッダーの高さ分を余白として追加 */
 }
-
 /* Sidebar */
 .sidebar {
   position: fixed;
@@ -69,21 +59,19 @@ nav a:hover {
   width: 30%;
   height: calc(100vh - 60px);
   overflow-y: auto;
-  border-right: 1px solid #dddddd;
-  background-color: #f4f4f4;
+  border-right: 1px solid #DDDDDD;
+  background-color: #F4F4F4;
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
   padding: 20px;
 }
-
 .sidebar h1 {
   writing-mode: vertical-rl;
   font-size: 3.5em;
   margin: 0;
 }
-
 .content {
   margin-left: 30%;
   flex: 1;
@@ -91,32 +79,27 @@ nav a:hover {
   padding: 20px;
   box-sizing: border-box;
 }
-
 /* スタンプラリーリスト */
 .stamprally-item {
   display: flex;
   align-items: flex-start;
-  border: 1px solid #dddddd;
+  border: 1px solid #DDDDDD;
   margin-bottom: 15px;
   padding: 15px;
   border-radius: 5px;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
 }
-
 .stamprally-item .content {
   flex: 1;
   margin: 0;
   padding: 0;
 }
-
 .stamprally-item h2 {
   margin: 0 0 10px;
 }
-
 .stamprally-item p {
   margin: 5px 0;
 }
-
 .join-button {
   display: inline-block;
   padding: 10px 15px;
@@ -129,84 +112,105 @@ nav a:hover {
   background-color: #FFFFCC;
   color: Black;
 }
-
 .join-button:hover {
   text-decoration: underline;
   background-color: #FFCC00;
 }
-
 /* getstamp.html 特有のスタイル */
 .getstamp-body {
   display: flex;
+  flex-direction: row;
   margin: 0;
   font-family: Arial, sans-serif;
-  height: 100vh; /* 全体の高さ */
+  height: calc(100vh - 60px); /* ヘッダーの高さを差し引く */
+  margin-top: 60px;
 }
-
 .getstamp-map {
-  flex: 1;
+  flex: 0 0 50%;
   height: 100%; /* 地図エリアの高さを確保 */
   border-right: 2px solid #ccc;
   box-sizing: border-box;
 }
-
 .getstamp-stamps {
-  flex: 1;
+  flex: 0 0 50%;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   overflow-y: auto;
-  background-color: #f9f9f9; /* 背景色 */
+  background-color: #F9F9F9; /* 背景色 */
 }
-
+/* スタンプリストの配置を変更（1つずつ大きなボタンに変更） */
 .stamp-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center; /* 要素を中央寄せ */
-  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* 幅120pxで自動調整 */
+  gap: 20px;                              /* ボタン同士の間隔 */
+  padding: 20px;
+  justify-items: center;
 }
-
-.stamp-slot {
-  flex: 0 1 calc(33.333% - 20px); /* 3列配置 */
-  width: 150px;
-  height: 150px;
+/* ボタンと説明をまとめるコンテナ */
+.spot-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 150px;
+}
+/* スタンプボタンのスタイル */
+.getstamp-slot {
+  width: 120px;                           /* ボタンの幅 */
+  height: 120px;                          /* ボタンの高さ */
   border: 2px dashed #aaa;
-  border-radius: 50%;
+  border-radius: 50%;                     /* 円形にする */
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2em;
-  color: #777;
-  background-color: #ffffff;
+  font-size: 1em;
+  color: #333;
+  background-color: #fff;
   text-align: center;
   box-sizing: border-box;
   transition: background-color 0.3s ease;
 }
-
-.stamp-slot:hover {
-  background-color: #eee;
+/* スタンプボタンにホバーしたときのエフェクト */
+.getstamp-slot:hover {
+  background-color: #F0F0F0;
   cursor: pointer;
 }
-
-.stamp-actions {
+/* スタンプラリーページのアクションボタン */
+.getstamp-actions {
   margin-top: 20px;
   text-align: center;
 }
-
+/* 場所の説明を丸いボタンの下に表示 */
+.spot.description {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #555;
+  text-align: center;
+  max-width: 120px;  /* ボタンの幅に合わせる */
+  word-wrap: break-word;
+}
 .stamp-actions button {
   padding: 10px 20px;
   font-size: 1em;
-  background-color: #4caf50;
+  background-color: #4CAF50;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
 .stamp-actions button:hover {
-  background-color: #45a049;
+  background-color: #45A049;
 }
-
+.getstamp-map,
+.getstamp-stamps {
+  width: 50%; /* 左右で半分ずつ幅を占有 */
+  height: calc(100vh - 60px); /* ヘッダーの高さを差し引いた高さ */
+  overflow: hidden; /* スクロールバーを非表示 */
+}
+/* ヘッダーと地図＆スタンプラリーエリアの間のスペースを調整 */
+.main-container {
+  margin-top: 60px;
+}

@@ -29,13 +29,19 @@ class StampRally(db.Model):
         - 一部完了: 'in_progress'
         - 未着手: 'not_started'
         """
-        statuses = [status.is_completed for status in StampStatus.query.filter_by(rally_id=self.rally_id).all()]
-        if all(statuses):
+        # クエリで完了ステータスの統計を取得
+        total_spots = db.session.query(StampStatus).filter_by(rally_id=self.rally_id).count()
+        completed_spots = db.session.query(StampStatus).filter_by(rally_id=self.rally_id, is_completed=True).count()
+
+        if total_spots == 0:
+            return "not_started"  # スポットが存在しない場合は未着手
+        elif completed_spots == total_spots:
             return "completed"
-        elif any(statuses):
+        elif completed_spots > 0:
             return "in_progress"
         else:
             return "not_started"
+
 
 class Spot(db.Model):
     __tablename__ = "spot"

@@ -1,68 +1,72 @@
-<html lang=“ja”>
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>スタンプラリー - 函館市</title>
-    <!-- LeafletのCSS -->
-    <link rel=“stylesheet” href=“https://unpkg.com/leaflet@1.9.4/dist/leaflet.css”>
-    <style>
-        body {
-            display: flex;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-        .map {
-            flex: 1;
-            height: 100vh;
-            border-right: 2px solid #ccc;
-        }
-        .stamps {
-            flex: 1;
-            padding: 10px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            justify-items: center;
-        }
-        .stamp-slot {
-            width: 150px;
-            height: 150px;
-            border: 2px dashed #aaa;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2em;
-            color: #777;
-            background-color: #F9F9F9;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"
+>
+  <title>スタンプラリー進捗</title>
+  <link rel="stylesheet" href="/static/stayle.css">
 </head>
 <body>
-    <!-- 左半分：地図表示 -->
-    <div class=“map” id=“map”></div>
-    <!-- 右半分：スタンプ枠 -->
-    <div class=“stamps”>
-        <div class=“stamp-slot”>スタンプ 1</div>
-        <div class=“stamp-slot”>スタンプ 2</div>
-        <div class=“stamp-slot”>スタンプ 3</div>
-        <div class=“stamp-slot”>スタンプ 4</div>
-        <div class=“stamp-slot”>スタンプ 5</div>
-        <div class=“stamp-slot”>スタンプ 6</div>
+    <div id="header-container"></div>
+  <script>
+    fetch('/static/header.html')
+      .then(response => response.text())
+      .then(data => document.getElementById('header-container').innerHTML = data)
+      .catch(error => console.error('ヘッダーの読み込み中にエラー:', error));
+  </script>
+  <h1>My Page</h1>
+ 
+  <div class="content1">
+    <div id="stamprally1" class="stamprally-item1">
+      <h2>👑 Completed 👑</h2>
+      <div class="scroll-container-wrapper">
+        <div class="scroll-container" id="completedRallies">
+            <!--  完了済みスタンプラリーがここに表示されます -->
+        </div>
+      </div>
     </div>
-    <!-- LeafletのJavaScript -->
-    <script src=“https://unpkg.com/leaflet@1.9.4/dist/leaflet.js”></script>
-    <script>
-        // 地図の初期化（函館市に固定）
-        const map = L.map('map').setView([41.7687, 140.7367], 13);
-        // OpenStreetMapのタイルレイヤーを追加
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href=“https://www.openstreetmap.org/copyright”>OpenStreetMap</a> contributors'
-        }).addTo(map);
-        // 函館市にピンを立てる
-        const marker = L.marker([41.7687, 140.7367]).addTo(map)
-            .bindPopup(‘函館市’)
-            .openPopup();
-    </script>
+    <div id="stamprally2" class="stamprally-item1">
+      <h2>👑 In Progress 👑</h2>
+      <div class="scroll-container-wrapper">
+        <div class="scroll-container" id="inProgressRallies">
+            <!--  進行中のスタンプラリーがここに表示されます -->
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <script>
+      // 完了済みスタンプラリーを取得する
+    fetch('/api/user/completed-rallies')
+      .then(response => response.json())
+      .then(data => {
+        const completedRalliesContainer = document.getElementById('completedRallies');
+        data.forEach(rally => {
+          const button = document.createElement('button');
+          button.classList.add('join-button1');
+          button.textContent = rally.name;
+          completedRalliesContainer.appendChild(button);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching completed rallies:', error);
+      });
+      // 進行中スタンプラリーを取得する
+    fetch('/api/user/in-progress-rallies')
+      .then(response => response.json())
+      .then(data => {
+        const inProgressRalliesContainer = document.getElementById('inProgressRallies');
+        data.forEach(rally => {
+          const button = document.createElement('button');
+          button.classList.add('join-button2');
+          button.textContent = rally.name;
+          inProgressRalliesContainer.appendChild(button);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching in-progress rallies:', error);
+      });
+  </script>
+ 
 </body>
 </html>
