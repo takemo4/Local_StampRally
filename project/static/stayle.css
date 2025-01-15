@@ -289,3 +289,98 @@ nav a:hover {
 .main-container {
   margin-top: 60px;
 }
+
+.completed, .in-progress {
+  text-align: center;
+  font-size: 1.2em;
+  margin: 20px auto;
+}
+
+.join-button1 {
+  display: inline-block;
+  padding: 10px 30px;
+  text-decoration: none;
+  border: 1px solid black;
+  font-size: 0.9em;
+  cursor: pointer;
+  background: linear-gradient(to bottom, #FFD700, #FFB800, #FFCC00);
+  color: Black;
+  width: 250px;
+  height: 200px;
+  white-space: nowrap;
+    /*  改行しないように */
+  word-wrap: break-word;
+    /*  長い単語は折り返し */
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin: 10px;
+}
+.join-button2 {
+  display: inline-block;
+  padding: 10px 30px;
+  text-decoration: none;
+  border: 1px solid black;
+  font-size: 0.9em;
+  cursor: pointer;
+  background-color: #a9cc51;
+  color: Black;
+  width: 200px;
+  height: 200px;
+  white-space: nowrap;
+    /*  改行しないように */
+  word-wrap: break-word;
+    /*  長い単語は折り返し */
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin: 10px;
+}
+.join-button1:hover {
+  text-decoration: underline;
+}
+.join-button2:hover {
+  text-decoration: underline;
+}
+.scroll-container-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+    /*  横スクロールバーを表示 */
+  white-space: nowrap;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  scroll-behavior: smooth;
+  width: 300px;
+  padding: 5px;
+  width: 70%;
+    /* 画面幅の80%  に設定 */
+  margin: 0 auto;
+    /*  コンテナを中央に配置 */
+}
+h1 {
+  text-align: left;
+  padding-left: 30px;
+  margin-top: 100px;
+  position: relative;
+  z-index: 2;
+}
+h2 {
+  text-align: center;
+  padding-left: 120px;
+  margin-top: 20px;
+}
+.content1 {
+  display: flex;
+  flex-direction: column;
+    /*  デフォルトは縦並び */
+  gap: 20px;
+  padding: 20px;
+}
+.stamprally-item1 {
+  flex: 1;
+}
